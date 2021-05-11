@@ -1,4 +1,4 @@
-STEVILO_DOVOLJENIH_NAPAK = 10
+STEVILO_DOVOLJENIH_NAPAK = 9
 PRAVILNA_CRKA, PONOVLJENA_CRKA, NAPACNA_CRKA = '+', 'o', '-'
 ZMAGA, PORAZ = 'w', 'x'
 ZACETEK = 's'
@@ -19,7 +19,7 @@ class Vislice:
 
     def nova_igra(self):
         nov_id = self.prost_id_igre()
-        sveza_igra = nova_igra(bazen_besed)
+        sveza_igra = nova_igra()
 
         self.igre[nov_id] = (sveza_igra, ZACETEK)
         return nov_id
@@ -31,9 +31,12 @@ class Vislice:
         return novo_stanje   
 
 class Igra:
-    def __init__(self, geslo, crke=[]):
+    def __init__(self, geslo, crke=None):
         self.geslo = geslo
-        self.crke = crke
+        if crke is None:
+            self.crke = []
+        else:
+            self.crke = crke
 
     def napacne_crke(self):
         return [c for c in self.crke if c.upper() not in self.geslo.upper()]
@@ -54,13 +57,13 @@ class Igra:
         pravilno = ''
         for c in self.geslo.upper():
             if c in self.crke:
-                pravilno += c
+                pravilno += c + ' '
             else:
-                pravilno += '_'
+                pravilno += '_ '
         return pravilno
 
         #return''.join([c if c in self.crke esle '_' for c in self.geslo.upper()])
-    def napravilni_ugibi(self):
+    def nepravilni_ugibi(self):
         return ' '.join(self.napacne_crke())
     
     def ugibaj(self, crka):
